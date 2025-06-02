@@ -11,8 +11,8 @@ and the React uploader UI into the wider Artemis stack.
 | 3 | Scaffold React front-end (Vite) | ✅ done |
 | 4 | Implement Upload tab |
 | 5 | Implement Library tab |
-| 6 | Containerise front-end & wire into Compose | ✅ fixed build step – fallback to npm install when no lock-file |
+| 6 | Containerise front-end & wire into Compose | ✅ fixed build step – fallback to npm install when no lock-file; resolved missing public directory error |
 | 7 | Smoke tests & validation |
 | 8 | Production hardening |
 
-Last updated: 2024-06-02
+Last updated: 2025-06-01

@@ -1,0 +1,2 @@
+I created an empty `frontend/uploader/public` directory with a .gitkeep file to satisfy the Docker build's COPY public step, resolving the missing public directory error.
+I updated docs/ROADMAP.md to note the fix and updated the last updated date.
