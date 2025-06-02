@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import { useToast } from "vue-toastification";
 import { useFileStore } from "./file";
 import { files as api } from "@/api";
 import { throttle } from "lodash-es";
@@ -168,6 +169,7 @@ export const useUploadStore = defineStore("upload", {
       this.processUploads();
     },
     async processUploads() {
+      const toast = useToast();
       const uploadsCount = Object.keys(this.uploads).length;
 
       const isBelowLimit = uploadsCount < UPLOADS_LIMIT;
@@ -181,6 +183,7 @@ export const useUploadStore = defineStore("upload", {
         const fileStore = useFileStore();
         window.removeEventListener("beforeunload", beforeUnload);
         buttons.success("upload");
+        toast.success("Files uploaded successfully!"); // Success toast
         this.reset();
         fileStore.reload = true;
       }
@@ -190,7 +193,10 @@ export const useUploadStore = defineStore("upload", {
         this.moveJob();
 
         if (item.file.isDir) {
-          await api.post(item.path).catch(this.setError);
+          await api.post(item.path).catch((error) => {
+            this.setError(error);
+            toast.error("Upload failed!"); // Error toast for directory
+          });
         } else {
           const onUpload = throttle(
             (event: ProgressEvent) =>
@@ -204,7 +210,10 @@ export const useUploadStore = defineStore("upload", {
 
           await api
             .post(item.path, item.file.file as File, item.overwrite, onUpload)
-            .catch(this.setError);
+            .catch((error) => {
+              this.setError(error);
+              toast.error("Upload failed!"); // Error toast for file
+            });
         }
 
         this.finishUpload(item);

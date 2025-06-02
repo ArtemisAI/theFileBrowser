@@ -139,6 +139,7 @@
     "upload": "Upload",
     "uploadFiles": "Uploading {files} files...",
     "uploadMessage": "Select an option to upload.",
+    "dragDropMessage": "Drag and drop files here or click to select",
     "optionalPassword": "Optional password",
     "resolution": "Resolution",
     "discardEditorChanges": "Are you sure you wish to discard the changes you've made?"
