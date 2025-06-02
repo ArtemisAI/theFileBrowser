@@ -1,0 +1,5 @@
+# Runtime logs (kept outside Git)
+logs/
+
+# Development environment files
+.env

@@ -53,9 +53,13 @@ func handle(fn handleFunc, prefix string, store *storage.Storage, server *settin
 			w.Header().Set(k, v)
 		}
 
+		// load global settings; on error respond with 500 instead of crashing
 		settings, err := store.Settings.Get()
 		if err != nil {
-			log.Fatalf("ERROR: couldn't get settings: %v\n", err)
+			clientIP := realip.FromRequest(r)
+			status := http.StatusInternalServerError
+			log.Printf("%s: %d %s %v", r.URL.Path, status, clientIP, err)
+			http.Error(w, strconv.Itoa(status)+" "+http.StatusText(status), status)
 			return
 		}
 

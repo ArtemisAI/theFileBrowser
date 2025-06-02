@@ -1,5 +1,17 @@
-*
-!docker/*
-!healthcheck.sh
-!docker_config.json
-!filebrowser
+# Exclude git metadata
+.git
+.gitignore
+
+# Node dependencies & build artefacts
+node_modules
+frontend/dist
+
+# IDE config
+.idea
+.vscode
+
+# Logs and runtime files
+logs
+
+# Local environment files
+.env

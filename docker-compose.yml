@@ -1,0 +1,48 @@
+
+# -----------------------------------------------------------------------------
+#  Docker Compose stack for the Artemis File-Browser **uploader** service
+# -----------------------------------------------------------------------------
+#  This Compose file wires together the File Browser back-end and (optionally)
+#  the React front-end that will be scaffolded under ./frontend/uploader later
+#  in the roadmap.  The front-end section is kept **commented-out** for now so
+#  that `docker compose up` already provides a working API while we iterate on
+#  the UI.
+#
+#  Environment variables are read from the local .env file (not committed) or
+#  from .env.example as a reference.
+# -----------------------------------------------------------------------------
+
+services:
+
+  filebrowser:
+    image: filebrowser/filebrowser:latest  # official image from Docker Hub
+    container_name: filebrowser
+    environment:
+      - PUID=${PUID:-1000}   # host UID – fall back to 1000 for *nix dev boxes
+      - PGID=${PGID:-1000}   # host GID – fall back to 1000
+      # Expose CORS for local dev so the Vite/React server (5173) can talk to
+      # the API directly.  This flag is passed via the command override.
+    command: ["--cors", "*"]
+    volumes:
+      - pod_data:/srv            # actual file storage
+      - ./logs:/logs             # runtime logs (mounted for inspection)
+    ports:
+      - "8080:80"               # File Browser UI & REST API
+    restart: unless-stopped
+
+  # -------------------------------------------------------------------------
+  #  Front-end (scaffolded later)
+  # -------------------------------------------------------------------------
+  frontend:
+    build: ./frontend/uploader
+    container_name: uploader-ui
+    environment:
+      - VITE_API=http://filebrowser   # internal service URL (inside Compose)
+    depends_on:
+      - filebrowser
+    ports:
+      - "3000:80"                    # exported port for users
+
+volumes:
+  pod_data:
+    name: pod_data

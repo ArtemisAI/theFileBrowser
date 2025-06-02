@@ -1,0 +1,7 @@
+I created the initial Docker Compose stack with File Browser as the storage & API layer.  I added .env.example, .dockerignore, global gitignore entries, logging directories, and a ROADMAP document.  This establishes the project skeleton referenced in INSTRUCTIONS.md.
+
+I also scaffolded the React (Vite) front-end under `frontend/uploader`, wired it
+into docker-compose, and implemented minimal Upload & Library pages that talk
+to File Browser’s REST API.  A multi-stage Dockerfile builds and serves the UI
+via nginx on port 3000.
+

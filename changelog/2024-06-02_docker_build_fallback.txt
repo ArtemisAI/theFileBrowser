@@ -1,0 +1,6 @@
+I changed the frontend/uploader Dockerfile to gracefully handle the absence of a package-lock.json.
+
+• Added a COPY step for package-lock.json (if it exists).
+• Replaced the hard-coded `npm ci` with a conditional that falls back to `npm install` when no lock­file is present.  This prevents the image build from aborting with the EUSAGE error that was logged earlier.
+
+This fixes the build failure reported in the logs while keeping deterministic builds possible once a lock-file is introduced.

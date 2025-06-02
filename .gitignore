@@ -30,6 +30,10 @@ yarn-error.log*
 bin/
 build/
 
+# Logs & runtime
+logs/
+.env
+
 # Vue distributable files
 /frontend/dist/*
 !/frontend/dist/.gitkeep
@@ -41,3 +45,4 @@ build/
 
 default.nix
 Dockerfile.dev
+frontend/uploader/dist
